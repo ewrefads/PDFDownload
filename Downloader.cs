@@ -26,6 +26,7 @@ namespace PDFDownload
             string rapport = "";
 
             //Using HttpClient to send a GET request to the specified URL
+            //The using statement ensures that the HttpClient is properly disposed of after use
             using (HttpClient client = new HttpClient())
             {
                 //Setting a try-catch-finally block to handle exceptions and ensure the report is written

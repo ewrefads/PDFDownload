@@ -19,7 +19,7 @@ namespace PDFDownloader
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
@@ -47,7 +47,7 @@ namespace PDFDownloader
             dataTable = reader.ReadFile(listPath);
 
             //Iterating through each row in the DataTable
-            foreach (DataRow row in dataTable.Rows) 
+            foreach (DataRow row in dataTable.Rows)
             {
                 //Extracting the ID and URLs from the row
                 string? id = row[0].ToString();
