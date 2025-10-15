@@ -32,7 +32,8 @@ namespace PDFDownloader
         public static string statusPath = defaultStatusPath;
 
         //Path for existing downloads
-        public static string dwnPath = @"C:\Visual Studio Projecter\PDFDownload\PDFDownload\Output\dwn\";
+        public static string defaultDwnPath = @"C:\Visual Studio Projecter\PDFDownload\PDFDownload\Output\dwn\";
+        public static string dwnPath = defaultDwnPath;
         public static void Main(string[] args)
         {
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);

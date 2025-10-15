@@ -25,7 +25,11 @@ namespace PDFDownloadTest
         [Fact]
         public void testXlsxExists()
         {
-            Assert.True(Path.Exists("TestFiles/test.xlsx"));
+            lock (ReaderTestBase.fileLock)
+            {
+                Assert.True(Path.Exists("TestFiles/test.xlsx"));
+            }
+            
         }
 
         [Fact]

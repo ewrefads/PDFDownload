@@ -14,28 +14,28 @@ namespace PDFDownloadTest
         public class DefaultPathTests
         {
             [Fact]
-            public void ListPathExists()
+            public void DefaultListPathDoesNotExists()
             {
-                Assert.True(Path.Exists(Program.defaultListPath));
+                Assert.True(!Path.Exists(Program.defaultListPath));
             }
 
             [Fact]
-            public void OutputPathExists()
+            public void DefaultOutputPathDoesNotExists()
             {
-                Assert.True(Path.Exists(Program.defaultOutputPath));
+                Assert.True(!Path.Exists(Program.defaultOutputPath));
             }
 
             [Fact]
-            public void StatusPathExists()
+            public void DefaultStatusPathDoesNotExists()
             {
-                Assert.True(Path.Exists(Program.statusPath));
+                Assert.True(!Path.Exists(Program.defaultStatusPath));
             }
 
 
             [Fact]
-            public void DwnPathExists()
+            public void DefaultDwnPathDoesNotExists()
             {
-                Assert.True(Path.Exists(Program.dwnPath));
+                Assert.True(!Path.Exists(Program.defaultDwnPath));
             }
         }
     }
