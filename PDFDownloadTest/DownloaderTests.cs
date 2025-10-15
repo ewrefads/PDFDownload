@@ -64,23 +64,18 @@ namespace PDFDownloadTest
     public class DownloaderSkipsNonworkingLinksTest: DownloaderTestsBase
     {
         [Fact]
-        public void DownloaderSkipsNonWorkingPrimaryLink()
+        public async void DownloaderSkipsNonWorkingPrimaryLink()
         {
             testNum = Guid.NewGuid().ToString();
-            lock (pdfFileLock)
+            string fileName = testNum + ".pdf";
+            await downloader.DownloadFile(nonWorkingLink, dwnPath, rapportPath, fileName, workingLink);
+            bool canRead = false;
+            using (var stream = File.Open(Path.Combine(dwnPath, fileName), FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                string fileName = testNum + ".pdf";
-                downloader.DownloadFile(nonWorkingLink, dwnPath, rapportPath, fileName, workingLink);
-                if (File.Exists(Path.Combine(dwnPath, fileName)))
-                {
-                    File.Delete(Path.Combine(dwnPath, fileName));
-                    Assert.True(true);
-                }
-                else
-                {
-                    Assert.True(false);
-                }
+                canRead = true;
             }
+            File.Delete(Path.Combine(dwnPath, fileName));
+            Assert.True(canRead);
             
         }
         [Fact]
