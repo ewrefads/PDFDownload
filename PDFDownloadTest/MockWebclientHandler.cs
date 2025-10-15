@@ -1,15 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using NPOI.HPSF;
-using Org.BouncyCastle.Asn1.Ocsp;
-using PDFDownload;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using PDFDownload;
 using System.Net;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PDFDownloadTest
 {
