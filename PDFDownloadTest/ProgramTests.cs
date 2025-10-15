@@ -62,7 +62,7 @@ namespace PDFDownloadTest
         {
             try
             {
-                Program.Main(new string[0]);
+                Program.Main(Array.Empty<string>());
                 Assert.True(true);
             }
             catch (Exception ex)

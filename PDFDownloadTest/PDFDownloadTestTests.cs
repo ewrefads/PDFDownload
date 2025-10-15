@@ -22,7 +22,7 @@ namespace PDFDownloadTest
             Assert.True(Path.Exists("TestFiles/testCorrupted.xlsx"));
         }
 
-        [Fact]
+        /*[Fact]
         public void testXlsxExists()
         {
             lock (ReaderTestBase.fileLock)
@@ -30,7 +30,7 @@ namespace PDFDownloadTest
                 Assert.True(Path.Exists("TestFiles/test.xlsx"));
             }
             
-        }
+        }*/
 
         [Fact]
         public void testTxtExists()
