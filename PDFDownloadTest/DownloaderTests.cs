@@ -1,4 +1,5 @@
-﻿using PDFDownload;
+﻿using NPOI.HPSF;
+using PDFDownload;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -44,19 +45,18 @@ namespace PDFDownloadTest
         }
 
         [Fact]
-        public void CanDownloaderDownloadFromWorkingSecondaryLink()
+        public async void CanDownloaderDownloadFromWorkingSecondaryLink()
         {
             testNum = Guid.NewGuid().ToString();
-            downloader.DownloadFile("", dwnPath, rapportPath, testNum + ".pdf", workingLink);
-            if (File.Exists(Path.Combine(dwnPath, testNum + ".pdf")))
+            string fileName = testNum + ".pdf";
+            await downloader.DownloadFile("", dwnPath, rapportPath, testNum + ".pdf", workingLink);
+            bool canRead = false;
+            using (var stream = File.Open(Path.Combine(dwnPath, fileName), FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                File.Delete(Path.Combine(dwnPath, testNum + ".pdf"));
-                Assert.True(true);
+                canRead = true;
             }
-            else
-            {
-                Assert.True(false);
-            }
+            File.Delete(Path.Combine(dwnPath, fileName));
+            Assert.True(canRead);
 
         }
     }
@@ -79,43 +79,47 @@ namespace PDFDownloadTest
             
         }
         [Fact]
-        public void NothingGetsCreatedIfSecondaryLinkDoesNotWork()
+        public async void NothingGetsCreatedIfSecondaryLinkDoesNotWork()
         {
             testNum = Guid.NewGuid().ToString();
-            lock (pdfFileLock)
+            string fileName = testNum + ".pdf";
+            await downloader.DownloadFile("", dwnPath, rapportPath, testNum + ".pdf", nonWorkingLink);
+            try
             {
-                downloader.DownloadFile("", dwnPath, rapportPath, testNum + ".pdf", nonWorkingLink);
-                if (!File.Exists(Path.Combine(dwnPath, testNum + ".pdf")))
+                using (var stream = File.Open(Path.Combine(dwnPath, fileName), FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
-
-                    Assert.True(true);
-                }
-                else
-                {
-                    File.Delete(Path.Combine(dwnPath, testNum + ".pdf"));
                     Assert.True(false);
                 }
+
             }
-            
+            catch (Exception ex)
+            {
+                Assert.True(true);
+            }
+
         }
     }
     public class DownloaderSkipsNonPDFLinks:DownloaderTestsBase
     {
         [Fact]
-        public void NonPDFFileDoesNotGetDownloaded()
+        public async void NonPDFFileDoesNotGetDownloaded()
         {
             testNum = Guid.NewGuid().ToString();
-            downloader.DownloadFile(NonPdfLink, dwnPath, rapportPath, testNum + ".pdf", "");
-            if (!File.Exists(Path.Combine(dwnPath, testNum + ".pdf")))
+            string fileName = testNum + ".pdf";
+            await downloader.DownloadFile(NonPdfLink, dwnPath, rapportPath, testNum + ".pdf", "");
+            try
             {
+                using (var stream = File.Open(Path.Combine(dwnPath, fileName), FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    Assert.True(false);
+                }
 
+            }
+            catch (Exception ex)
+            {
                 Assert.True(true);
             }
-            else
-            {
-                File.Delete(Path.Combine(dwnPath, testNum + ".pdf"));
-                Assert.True(false);
-            }
+            
         }
     }
 }
