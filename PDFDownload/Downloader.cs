@@ -21,7 +21,7 @@ namespace PDFDownload
     public class Downloader
     {
         public IWebClientHandler webClientHandler = new HttpClientHandler();
-        public static object outpuFileLock = new object();
+        public static object statusRapportLock = new object();
         //Defining the method that will download a PDF file from a given URL
         public async Task DownloadFile(string url, string downloadPath, string rapportPath, string pdfName, string secondUrl = "")
         {
@@ -68,7 +68,7 @@ namespace PDFDownload
                 if (secondUrl != "")
                 {
                     //Recursively call the DownloadFile method with the second URL
-                    DownloadFile(secondUrl, downloadPath, rapportPath, pdfName);
+                    await DownloadFile(secondUrl, downloadPath, rapportPath, pdfName);
                 }
                 else
                 {
