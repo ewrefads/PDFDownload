@@ -35,7 +35,7 @@ namespace PDFDownload
                 //Reading the excel file using FileStream and ExcelDataReader
                 //The 'using' statement ensures that the FileStream is properly disposed of after use
                 //The dataTable is used to store the data read from the Excel file 
-                using (FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+                using (FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
                     IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
                     dataTable = excelReader.AsDataSet().Tables[0];
