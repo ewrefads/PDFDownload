@@ -30,7 +30,7 @@ namespace PDFDownloadTest
         [Fact]
         public void actualDataExists()
         {
-            Assert.True(Path.Exists("TestFiles/GRI_2017_2020 (1).xlsx"));
+            Assert.True(Path.Exists("TestFiles/GRI_2017_2020 (Reduced).xlsx"));
         }
     }
 }

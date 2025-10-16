@@ -10,7 +10,7 @@ namespace PDFDownloadTest
     {
         public static object fileLock = new object();
         protected Reader reader;
-        protected UserInfoHandler userInfoHandler;
+        protected IConsoleOutputHandler userInfoHandler;
         protected ReaderTestBase()
         {
             reader = new Reader();
@@ -78,9 +78,9 @@ namespace PDFDownloadTest
         [Fact]
         public void ActualDataLoads()
         {
-            DataTable table = reader.ReadFile(Path.GetFullPath("TestFiles/GRI_2017_2020 (1).xlsx"));
-            Assert.Equal(21058, table.Rows.Count);
-            Assert.Equal(42, table.Columns.Count);
+            DataTable table = reader.ReadFile(Path.GetFullPath("TestFiles/GRI_2017_2020 (Reduced).xlsx"));
+            Assert.Equal(20, table.Rows.Count);
+            Assert.Equal(41, table.Columns.Count);
         }
     }
 }

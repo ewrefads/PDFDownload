@@ -19,9 +19,9 @@ namespace PDFDownload
     //Defining a class for reading Excel files
     public class Reader
     {
-        private UserInfoHandler userInfoHandler = new ConsoleOut();
+        private IConsoleOutputHandler userInfoHandler = new ConsoleOut();
 
-        public UserInfoHandler UserInfoHandler { get => userInfoHandler; set => userInfoHandler = value; }
+        public IConsoleOutputHandler UserInfoHandler { get => userInfoHandler; set => userInfoHandler = value; }
 
         //Defining the method that will read an Excel file from a path and return a DataTable containing the data
         public DataTable ReadFile(string filePath)

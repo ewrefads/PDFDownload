@@ -9,7 +9,7 @@ namespace PDFDownloadTest
         public async Task<HttpResponseMessage> GetAsync(string url, HttpCompletionOption httpCompletionOption)
         {
 
-            if (url.Length > 0 && !url.Contains("noFile"))
+            if (url.Length > 0 && url.Contains(".pdf"))
             {
                 FileStream fileStream = File.OpenRead(url);
                 string fileName = Path.GetFileName(url);
@@ -36,9 +36,22 @@ namespace PDFDownloadTest
             {
                 return new HttpResponseMessage(HttpStatusCode.NotFound);
             }
+            else if(url.Contains("nonexistingFile"))
+            {
+                string fileName = "noFile.pdf";
+                HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+
+
+                result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+                result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = fileName.ToString()
+                };
+                return result;
+            }
             else
             {
-                return null;
+                return new HttpResponseMessage();
             }
         }
     }

@@ -10,7 +10,7 @@ namespace PDFDownloadTest
 {
     public abstract class UserInfoHandlerTestsBase
     {
-        protected UserInfoHandler infoHandler;
+        protected IConsoleOutputHandler infoHandler;
 
         protected UserInfoHandlerTestsBase()
         {

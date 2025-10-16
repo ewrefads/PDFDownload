@@ -21,25 +21,28 @@ namespace PDFDownloader
     {
         //Path for the list of URLs
         
-        public static readonly string defaultListPath = @"C:\Visual Studio Projecter\PDFDownload\PDFDownload\List Folder\GRI_2017_2020 (1).xlsx";
+        public static readonly string defaultListPath = "ListFolder/GRI_2017_2020 (1).xlsx";
         public static string listPath = defaultListPath;
         //Path for output folder
-        public static readonly string defaultOutputPath = @"C:\Visual Studio Projecter\PDFDownload\PDFDownload\Output\";
+        public static readonly string defaultOutputPath = "Output";
         public static string outputPath = defaultOutputPath;
 
         //Path for status rapport
-        public static string defaultStatusPath = @"C:\Visual Studio Projecter\PDFDownload\PDFDownload\Output\StatusRapport.txt";
+        public static string defaultStatusPath = "Output/StatusRapport.txt";
         public static string statusPath = defaultStatusPath;
 
         //Path for existing downloads
-        public static string defaultDwnPath = @"C:\Visual Studio Projecter\PDFDownload\PDFDownload\Output\dwn\";
+        public static string defaultDwnPath = "Output/dwn";
         public static string dwnPath = defaultDwnPath;
+
+        public static int downloadAttempts = 0;
+
+        public static Downloader downloader = new Downloader();
         public static void Main(string[] args)
         {
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
             //Creating instances of the Downloader and Reader classes
-            Downloader downloader = new Downloader();
             Reader reader = new Reader();
 
             //Getting a list of existing PDF files in the download directory
@@ -49,6 +52,7 @@ namespace PDFDownloader
             DataTable dataTable = new DataTable();
             dataTable = reader.ReadFile(listPath);
 
+            List<Task> tasks = new List<Task>();
             //Iterating through each row in the DataTable
             foreach (DataRow row in dataTable.Rows)
             {
@@ -63,8 +67,11 @@ namespace PDFDownloader
                     continue;
 
                 //Downloading the PDF file using the Downloader class if it isn't already downloaded
-                downloader.DownloadFile(url, dwnPath, statusPath, pdfName, secondaryUrl);
+                Task t = Task.Run(() => downloader.DownloadFile(url, dwnPath, statusPath, pdfName, secondaryUrl));
+                tasks.Add(t);
+                downloadAttempts++;
             }
+            Task.WaitAll(tasks.ToArray());
         }
     }
 }

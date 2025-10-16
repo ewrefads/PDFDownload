@@ -14,28 +14,28 @@ namespace PDFDownloadTest
         public class DefaultPathTests
         {
             [Fact]
-            public void DefaultListPathDoesNotExists()
+            public void DefaultListPathExists()
             {
-                Assert.True(!Path.Exists(Program.defaultListPath));
+                Assert.True(Path.Exists(Program.defaultListPath));
             }
 
             [Fact]
-            public void DefaultOutputPathDoesNotExists()
+            public void DefaultOutputPathExists()
             {
-                Assert.True(!Path.Exists(Program.defaultOutputPath));
+                Assert.True(Path.Exists(Program.defaultOutputPath));
             }
 
             [Fact]
-            public void DefaultStatusPathDoesNotExists()
+            public void DefaultStatusPathExists()
             {
-                Assert.True(!Path.Exists(Program.defaultStatusPath));
+                Assert.True(Path.Exists(Program.defaultStatusPath));
             }
 
 
             [Fact]
-            public void DefaultDwnPathDoesNotExists()
+            public void DefaultDwnPathExists()
             {
-                Assert.True(!Path.Exists(Program.defaultDwnPath));
+                Assert.True(Path.Exists(Program.defaultDwnPath));
             }
         }
     }
@@ -68,6 +68,62 @@ namespace PDFDownloadTest
             catch (Exception ex)
             {
                 Assert.Equal("", ex.Message);
+            }
+        }
+    }
+
+    public class ProgramRunsWithDataTest : ProgramTestBase
+    {
+        [Fact]
+        public void ProgramRunsWithMockData()
+        {
+            Program.listPath = "TestFiles/GRI_2017_2020 (OfflineTestVersion).xlsx";
+            Program.downloader.webClientHandler = new MockWebclientHandler();
+            try
+            {
+                Program.Main(Array.Empty<string>());
+                int fileCount = Directory.GetFiles(Program.dwnPath).Count();
+                DirectoryInfo di = new DirectoryInfo(Program.dwnPath);
+                foreach (FileInfo fi in di.GetFiles())
+                {
+                    fi.Delete();
+                }
+                Assert.True(fileCount == 10);
+            }
+            catch (Exception ex)
+            {
+                DirectoryInfo di = new DirectoryInfo(Program.dwnPath);
+                foreach (FileInfo fi in di.GetFiles())
+                {
+                    fi.Delete();
+                }
+                Assert.Equal("an exception was received", ex.Message);
+            }
+        }
+
+        [Fact]
+        public void ProgramRunsWithActualData()
+        {
+            Program.listPath = "TestFiles/GRI_2017_2020 (Reduced).xlsx";
+            try
+            {
+                Program.Main(Array.Empty<string>());
+                int fileCount = Directory.GetFiles(Program.dwnPath).Count();
+                DirectoryInfo di = new DirectoryInfo(Program.dwnPath);
+                foreach (FileInfo fi in di.GetFiles())
+                {
+                    fi.Delete();
+                }
+                Assert.True(fileCount > 0 || Program.downloadAttempts == 51);
+            }
+            catch (Exception ex)
+            {
+                DirectoryInfo di = new DirectoryInfo(Program.dwnPath);
+                foreach (FileInfo fi in di.GetFiles())
+                {
+                    fi.Delete();
+                }
+                Assert.Equal("an exception was received", ex.Message);
             }
         }
     }

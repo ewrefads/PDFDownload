@@ -12,6 +12,9 @@
   <ItemGroup>
     <None Remove="Output\StatusRapport.txt" />
     <None Remove="TestFiles\GRI_2017_2020 %281%29.xlsx" />
+    <None Remove="TestFiles\GRI_2017_2020 %28OfflineTestVersion%29.xlsx" />
+    <None Remove="TestFiles\GRI_2017_2020 %28Reduced%29.xlsx" />
+    <None Remove="TestFiles\StatusReport.docx" />
     <None Remove="TestFiles\test.pdf" />
     <None Remove="TestFiles\test.txt" />
     <None Remove="TestFiles\test.xlsx" />
@@ -22,7 +25,13 @@
     <Content Include="Output\StatusRapport.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestFiles\GRI_2017_2020 (1).xlsx">
+    <Content Include="TestFiles\GRI_2017_2020 (OfflineTestVersion).xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\GRI_2017_2020 (Reduced).xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\StatusReport.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="TestFiles\test.pdf">
