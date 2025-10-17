@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 using Program = PDFDownloader.Program;
 namespace PDFDownloadTest
 {
+
     /// <summary>
     /// Tests to ensure the default paths of the program works
     /// </summary>
+    [Collection("Filehandling")]
     public class DefaultPathTests
     {
         /// <summary>
@@ -74,6 +76,7 @@ namespace PDFDownloadTest
     /// <summary>
     /// class containing a basic test to ensure the program can complete its main method
     /// </summary>
+    [Collection("Filehandling")]
     public class ProgramRunsTest: ProgramTestBase
     {
         /// <summary>
@@ -97,6 +100,7 @@ namespace PDFDownloadTest
     /// <summary>
     /// Tests to see if the program runs with data
     /// </summary>
+    [Collection("Filehandling")]
     public class ProgramRunsWithDataTest : ProgramTestBase
     {
         /// <summary>

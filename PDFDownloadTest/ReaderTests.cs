@@ -9,6 +9,7 @@ namespace PDFDownloadTest
     /// <summary>
     /// Base class for the tests of the Reader class
     /// </summary>
+    [Collection("Filehandling")]
     public abstract class ReaderTestBase : IDisposable
     {
         public static object fileLock = new object();
@@ -30,6 +31,7 @@ namespace PDFDownloadTest
     /// <summary>
     /// class containing a test to check what happens when no file is provided
     /// </summary>
+    [Collection("Filehandling")]
     public class FailsToReadNoFileTest: ReaderTestBase
     {
         /// <summary>
@@ -47,6 +49,7 @@ namespace PDFDownloadTest
     /// <summary>
     /// class containing a test to check what happens when a non xlsx file is provided
     /// </summary>
+    [Collection("Filehandling")]
     public class FailsToReadNonXlsxFileTest: ReaderTestBase
     {
         /// <summary>
@@ -63,6 +66,7 @@ namespace PDFDownloadTest
     /// <summary>
     /// class containing a test to check what happens when a corrupted xlsx file is provided
     /// </summary>
+    [Collection("Filehandling")]
     public class FailsToReadCorruptedFileTest: ReaderTestBase
     {
         /// <summary>
@@ -81,6 +85,7 @@ namespace PDFDownloadTest
     /// <summary>
     /// class containing a test to see what happens when a working xlsx file is provided
     /// </summary>
+    [Collection("Filehandling")]
     public class ReadsFileFromAbsolutePathTest: ReaderTestBase
     {
         /// <summary>
@@ -102,6 +107,7 @@ namespace PDFDownloadTest
     /// <summary>
     /// class containing a test to see what happens when the reduced data set gets loaded
     /// </summary>
+    [Collection("Filehandling")]
     public class ActualReducedDataLoadsTest: ReaderTestBase
     {
         /// <summary>

@@ -11,6 +11,7 @@ namespace PDFDownloadTest
     /// <summary>
     /// Class containing various tests to check if loose test files exists
     /// </summary>
+    [Collection("Filehandling")]
     public class PDFDownloadTestTests
     {
         /// <summary>
