@@ -8,40 +8,56 @@ using System.Threading.Tasks;
 using Program = PDFDownloader.Program;
 namespace PDFDownloadTest
 {
-    public class ProgramTests
+    /// <summary>
+    /// Tests to ensure the default paths of the program works
+    /// </summary>
+    public class DefaultPathTests
     {
-
-        public class DefaultPathTests
+        /// <summary>
+        /// Ensures the default path to the data works
+        /// </summary>
+        [Fact]
+        public void DefaultListPathExists()
         {
-            [Fact]
-            public void DefaultListPathExists()
-            {
-                Assert.True(Path.Exists(Program.defaultListPath));
-            }
+            Assert.True(Path.Exists(Program.defaultListPath));
+        }
 
-            [Fact]
-            public void DefaultOutputPathExists()
-            {
-                Assert.True(Path.Exists(Program.defaultOutputPath));
-            }
+        /// <summary>
+        /// Ensures the default path to the output folder works
+        /// </summary>
+        [Fact]
+        public void DefaultOutputPathExists()
+        {
+            Assert.True(Path.Exists(Program.defaultOutputPath));
+        }
 
-            [Fact]
-            public void DefaultStatusPathExists()
-            {
-                Assert.True(Path.Exists(Program.defaultStatusPath));
-            }
+        /// <summary>
+        /// Ensures the default path to the status report works
+        /// </summary>
+        [Fact]
+        public void DefaultStatusPathExists()
+        {
+            Assert.True(Path.Exists(Program.defaultStatusPath));
+        }
 
-
-            [Fact]
-            public void DefaultDwnPathExists()
-            {
-                Assert.True(Path.Exists(Program.defaultDwnPath));
-            }
+        /// <summary>
+        /// Ensures the default path to the download folder works
+        /// </summary>
+        [Fact]
+        public void DefaultDwnPathExists()
+        {
+            Assert.True(Path.Exists(Program.defaultDwnPath));
         }
     }
 
+    /// <summary>
+    /// Base class for tests of the main program
+    /// </summary>
     public abstract class ProgramTestBase
     {
+        /// <summary>
+        /// Sets the programs path to various test folders
+        /// </summary>
         protected ProgramTestBase()
         {
             Program.listPath = Path.GetFullPath("TestFiles/test.xlsx");
@@ -55,8 +71,14 @@ namespace PDFDownloadTest
         }
     }
 
+    /// <summary>
+    /// class containing a basic test to ensure the program can complete its main method
+    /// </summary>
     public class ProgramRunsTest: ProgramTestBase
     {
+        /// <summary>
+        /// Checks to see if the program completes its main method without issues using only a singe actual datapoint
+        /// </summary>
         [Fact]
         public void ProgramRuns()
         {
@@ -72,8 +94,14 @@ namespace PDFDownloadTest
         }
     }
 
+    /// <summary>
+    /// Tests to see if the program runs with data
+    /// </summary>
     public class ProgramRunsWithDataTest : ProgramTestBase
     {
+        /// <summary>
+        /// Checks to see if the program can run with mock data. The data has links provided to local files
+        /// </summary>
         [Fact]
         public void ProgramRunsWithMockData()
         {
@@ -101,6 +129,9 @@ namespace PDFDownloadTest
             }
         }
 
+        /// <summary>
+        /// Checks to see if the program can handle actual data
+        /// </summary>
         [Fact]
         public void ProgramRunsWithActualData()
         {

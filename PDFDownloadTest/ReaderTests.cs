@@ -6,6 +6,9 @@ using System.Reflection.PortableExecutable;
 
 namespace PDFDownloadTest
 {
+    /// <summary>
+    /// Base class for the tests of the Reader class
+    /// </summary>
     public abstract class ReaderTestBase : IDisposable
     {
         public static object fileLock = new object();
@@ -15,7 +18,7 @@ namespace PDFDownloadTest
         {
             reader = new Reader();
             userInfoHandler = new ConsoleOut();
-            reader.UserInfoHandler = userInfoHandler;
+            reader.ConsoleOutPutHandler = userInfoHandler;
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
         }
         public void Dispose()
@@ -24,8 +27,14 @@ namespace PDFDownloadTest
         }
     }
 
+    /// <summary>
+    /// class containing a test to check what happens when no file is provided
+    /// </summary>
     public class FailsToReadNoFileTest: ReaderTestBase
     {
+        /// <summary>
+        /// Checks to see if the program fails if no file is provided
+        /// </summary>
         [Fact]
         public void FailsToReadNoFile()
         {
@@ -35,8 +44,14 @@ namespace PDFDownloadTest
         }
     }
 
+    /// <summary>
+    /// class containing a test to check what happens when a non xlsx file is provided
+    /// </summary>
     public class FailsToReadNonXlsxFileTest: ReaderTestBase
     {
+        /// <summary>
+        /// Checks to see if the program fails if no xlsx file is provided
+        /// </summary>
         [Fact]
         public void FailsToReadNonXlsxFile()
         {
@@ -45,21 +60,32 @@ namespace PDFDownloadTest
             Assert.Contains($"An error occurred while reading the Excel file: ", outputString);
         }
     }
-
+    /// <summary>
+    /// class containing a test to check what happens when a corrupted xlsx file is provided
+    /// </summary>
     public class FailsToReadCorruptedFileTest: ReaderTestBase
     {
+        /// <summary>
+        /// Checks to see if the program fails if a corrupted xlsx file is provided
+        /// </summary>
         [Fact]
         public void FailsToReadCorruptedFile()
         {
-            reader.UserInfoHandler = userInfoHandler;
+            reader.ConsoleOutPutHandler = userInfoHandler;
             reader.ReadFile(Path.GetFullPath("TestFiles/testCorrupted.xlsx"));
             var outputString = userInfoHandler.Read()[userInfoHandler.Read().Count - 1];
             Assert.Contains($"An error occurred while reading the Excel file: ", outputString);
         }
     }
 
+    /// <summary>
+    /// class containing a test to see what happens when a working xlsx file is provided
+    /// </summary>
     public class ReadsFileFromAbsolutePathTest: ReaderTestBase
     {
+        /// <summary>
+        /// Check to see if a working xlsx file is read correctly
+        /// </summary>
         [Fact]
         public void ReadsFileFromAbsolutePath()
         {
@@ -73,10 +99,16 @@ namespace PDFDownloadTest
         }
     }
 
-    public class ActualDataLoadsTest: ReaderTestBase
+    /// <summary>
+    /// class containing a test to see what happens when the reduced data set gets loaded
+    /// </summary>
+    public class ActualReducedDataLoadsTest: ReaderTestBase
     {
+        /// <summary>
+        /// Checks to see if a larger dataset can be loaded
+        /// </summary>
         [Fact]
-        public void ActualDataLoads()
+        public void ActualReducedDataLoads()
         {
             DataTable table = reader.ReadFile(Path.GetFullPath("TestFiles/GRI_2017_2020 (Reduced).xlsx"));
             Assert.Equal(20, table.Rows.Count);

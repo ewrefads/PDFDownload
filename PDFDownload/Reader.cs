@@ -19,11 +19,11 @@ namespace PDFDownload
     //Defining a class for reading Excel files
     public class Reader
     {
-        private IConsoleOutputHandler userInfoHandler = new ConsoleOut();
+        private IConsoleOutputHandler consoleOutPutHandler = new ConsoleOut();
 
-        public IConsoleOutputHandler UserInfoHandler { get => userInfoHandler; set => userInfoHandler = value; }
+        public IConsoleOutputHandler ConsoleOutPutHandler { get => consoleOutPutHandler; set => consoleOutPutHandler = value; }
 
-        //Defining the method that will read an Excel file from a path and return a DataTable containing the data
+        ///Defining the method that will read an Excel file from a path and return a DataTable containing the data
         public DataTable ReadFile(string filePath)
         {
             //Defining a DataTable to hold the data
@@ -44,7 +44,7 @@ namespace PDFDownload
             }
             catch (Exception ex)
             {
-                userInfoHandler.WriteLine($"An error occurred while reading the Excel file: {ex.Message}");
+                consoleOutPutHandler.WriteLine($"An error occurred while reading the Excel file: {ex.Message}");
             }
             
             return dataTable;

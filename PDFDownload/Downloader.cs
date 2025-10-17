@@ -83,6 +83,7 @@ namespace PDFDownload
                 //Another try-catch block to handle exceptions when writing the report
                 try
                 {
+                    //Checks if rapportpath is the wrong file type
                     if(rapportPath.Length > 0 && Path.GetExtension(rapportPath).ToLower() != ".txt")
                     {
                         throw new Exception("rapport is not a txt file");

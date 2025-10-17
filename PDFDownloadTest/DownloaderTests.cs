@@ -10,6 +10,9 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PDFDownloadTest
 {
+    /// <summary>
+    /// Base class for test classes of the Downloader class
+    /// </summary>
     public class DownloaderTestsBase
     {
         protected Downloader downloader = new Downloader();
@@ -30,10 +33,16 @@ namespace PDFDownloadTest
             downloader.statusReportWriter = statusreportWriter;
         }
     }
+    /// <summary>
+    /// Tests related to handling of working links
+    /// </summary>
     [Collection("Filehandling")]
     public class CanDownloaderDownloadFromWorkingLinkTest: DownloaderTestsBase
     {
-        
+        /// <summary>
+        /// Checks to ensure a file gets downloaded from a valid link
+        /// Test id: DT-01
+        /// </summary>
         [Fact]
         public async void CanDownloaderDownloadFromWorkingPrimaryLink()
         {
@@ -41,6 +50,7 @@ namespace PDFDownloadTest
             string fileName = testNum + ".pdf";
             await downloader.DownloadFile(workingLink, dwnPath, rapportPath, fileName, "");
             bool canRead = false;
+            //Checks to see if the file has been created
             using (var stream = File.Open(Path.Combine(dwnPath, fileName), FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 canRead = true;
@@ -49,6 +59,9 @@ namespace PDFDownloadTest
             Assert.True(canRead);
         }
 
+        /// <summary>
+        /// Checks if the status report gets updated correctly on a succesful download
+        /// </summary>
         [Fact]
         public async void DoesStatusRapportGetUpdatedOnSuccesfulDownload()
         {
@@ -72,6 +85,9 @@ namespace PDFDownloadTest
             Assert.True(entryAdded);
         }
 
+        /// <summary>
+        /// Checks if the file gets downloaded if only the secondary link is correct
+        /// </summary>
         [Fact]
         public async void CanDownloaderDownloadFromWorkingSecondaryLink()
         {
@@ -88,9 +104,15 @@ namespace PDFDownloadTest
 
         }
     }
+    /// <summary>
+    /// Class containing methods related to links which can be connected to but does not return a downloadable pdf
+    /// </summary>
     [Collection("Filehandling")]
     public class DownloaderSkipsNonworkingLinksTest: DownloaderTestsBase
     {
+        /// <summary>
+        /// Checks if a file gets downloaded if the first link does not work
+        /// </summary>
         [Fact]
         public async void DownloaderSkipsNonWorkingPrimaryLink()
         {
@@ -106,6 +128,10 @@ namespace PDFDownloadTest
             Assert.True(canRead);
             
         }
+
+        /// <summary>
+        /// Checks to ensure the downloader does not attempt to create a file if the secondary link is not valid
+        /// </summary>
         [Fact]
         public async void NothingGetsCreatedIfSecondaryLinkDoesNotWork()
         {
@@ -127,6 +153,9 @@ namespace PDFDownloadTest
 
         }
 
+        /// <summary>
+        /// Checks to ensure the status report gets updated correctly on a failed download from a nonworking link
+        /// </summary>
         [Fact]
         public async void DoesStatusRapportGetUpdatedOnNonWorkingLinkDownload()
         {
@@ -153,9 +182,16 @@ namespace PDFDownloadTest
             Assert.True(entryAdded);
         }
     }
+
+    /// <summary>
+    /// class containing tests related to working links which does not provide a downloadable pdf
+    /// </summary>
     [Collection("Filehandling")]
     public class DownloaderSkipsNonPDFLinks:DownloaderTestsBase
     {
+        /// <summary>
+        /// Checks to ensure links without pdfs does not get downloaded
+        /// </summary>
         [Fact]
         public async void NonPDFFileDoesNotGetDownloaded()
         {
@@ -178,9 +214,15 @@ namespace PDFDownloadTest
         }
     }
 
+    /// <summary>
+    /// class containing tests related to lost connections
+    /// </summary>
     [Collection("filehandling")]
     public class DownloaderHandlesLostConnectionTests: DownloaderTestsBase
     {
+        /// <summary>
+        /// Check to ensure the downloader handles a complete connection loss after getting the initial header data
+        /// </summary>
         [Fact]
         public async void DownloaderHandlesCompleteConnectionLoss()
         {
@@ -191,9 +233,15 @@ namespace PDFDownloadTest
         }
     }
 
+    /// <summary>
+    /// Handles various error scenarios related to the status report
+    /// </summary>
     [Collection("filehandling")]
     public class DownloaderHandlesStatusReportErrorsTest: DownloaderTestsBase
     {
+        /// <summary>
+        /// Checks if the downloader throws an error if no path to the status report being provided
+        /// </summary>
         [Fact]
         public async void DownloaderThrowsExceptionIfNoReportIsProvided()
         {
@@ -214,20 +262,27 @@ namespace PDFDownloadTest
             Assert.True(errorLogged && fileDownloaded);
         }
 
+        /// <summary>
+        /// Checks if the downloader creates the status report if it has not yet been created at the path provided
+        /// </summary>
         [Fact]
         public async void DownloaderCreatesStatusReportIfItDoesNotExist()
         {
             string noStatusRapport = "testStatusRaport.txt";
             testNum = Guid.NewGuid().ToString();
             string fileName = testNum + ".pdf";
+            bool fileExisted = File.Exists(noStatusRapport);
             await downloader.DownloadFile(workingLink, dwnPath, noStatusRapport, testNum + ".pdf", workingLink);
             bool statusReportCreated = File.Exists(noStatusRapport);
             bool fileDownloaded = File.Exists(Path.Combine(dwnPath, fileName));
             File.Delete(noStatusRapport);
             File.Delete(Path.Combine(dwnPath, fileName));
-            Assert.True(statusReportCreated);
+            Assert.True(statusReportCreated && !fileExisted);
         }
 
+        /// <summary>
+        /// Checks to ensure the downloader only writes to a txt file
+        /// </summary>
         [Fact]
         public async void DownloaderThrowsExceptionIfReportIsNotTxtFile()
         {
