@@ -21,7 +21,7 @@ namespace PDFDownloadTest
         public static string nonWorkingLink = Path.GetFullPath("TestFiles/noFile");
         public static string NonPdfLink = Path.GetFullPath("TestFiles/test.txt");
         public static string testNum = "test";
-        public static string dwnPath = Path.GetFullPath("Output/dwn");
+        public static string dwnPath = "Output/dwn";
         public static string rapportPath = Path.GetFullPath("Output/StatusRapport.txt");
         protected static object pdfFileLock = new object();
         protected static object statusRepportLock = Downloader.statusRapportLock;
@@ -29,6 +29,11 @@ namespace PDFDownloadTest
         
         public DownloaderTestsBase()
         {
+            if(!Path.Exists(dwnPath))
+            {
+                Directory.CreateDirectory(dwnPath);
+            }
+            dwnPath = Path.GetFullPath(dwnPath);
             downloader.webClientHandler = new MockWebclientHandler();
             downloader.statusReportWriter = statusreportWriter;
         }
