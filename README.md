@@ -23,13 +23,6 @@ Requirements to run and test
 * To run the program simply use the executable of the same name in the PDFDownload folder
 * To Test either run the following command: ```dotnet test``` or you can run it through visual studio by opening the solution file and using the test explorer
 
-## Help
-
-Any advise for common problems or issues.
-```
-command to run if program contains helper info
-```
-
 ## Authors
-Thor271998(Original version)
-ewrefads(testing and some further work)
+* Thor271998(Original version)
+* ewrefads(testing and some further work)
